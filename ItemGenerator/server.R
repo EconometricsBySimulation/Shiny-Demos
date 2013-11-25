@@ -34,7 +34,7 @@ shinyServer(function(input, output) {
               collapse="\n", sep=""),"\n"
       ), collapse="\n")
       
-      for (l in 1:input$nlayer) for (t in 1:8) 
+      for (l in 1:10) for (t in 1:8) 
         items[i] <- gsub(paste0("#",t),sample(get(paste0("t",t)),1),items[i])
     }
     items
