@@ -2,7 +2,7 @@
 
 library(shiny)
 
-load("concordance.Rdata")
+load("freqTable.Rdata")
 
 # Load the CRAN library
 library(rmongodb)
@@ -44,25 +44,23 @@ shinyServer(function(input, output) {
   paste0("Hits: ", counter)
   })
   
-  # Show function list
+  # Show function list in plot
   output$frequencydisplay <- renderPlot({
     tsearch <- input$tsearch
-    # Concordance displays
+    # freqTable displays
     FS = input$FS[1]
     FSmax <- input$FS[2]
     ndisplay <- input$ndisplay
-    
-    (functionslist <- concordance[concordance[,2]==FS,1])
-    
+        
     nrange <- FS:FSmax
     if ((length(nrange)>ndisplay)&(!ndisplay==0)) 
       nrange <- seq(FS, FSmax, length.out=ndisplay)
     
     par(mar=c(2,2,4,1))
     
-    ylist <- concordance[nrange,2]
+    ylist <- freqTable[nrange,2]
     
-    if (input$logY) ylist <- log(concordance[nrange,2])
+    if (input$logY) ylist <- log(freqTable[nrange,2])
     
     plot(nrange, type="n",
          ylist, 
@@ -70,9 +68,28 @@ shinyServer(function(input, output) {
          main="Function Count")
     
     for (i in 1:length(nrange)) text(nrange[i], ylist[i], 
-                             concordance[nrange[i],1],
+                             freqTable[nrange[i],1],
                              srt=90, adj = c(0,.35))  
 
+  })
+  
+  # Show function list
+  output$nchardisplay <- renderPlot({
+    tsearch <- input$tsearch
+    FS = input$FS[1]
+    FSmax <- input$FS[2]
+    ndisplay <- input$ndisplay
+        
+    nrange <- FS:FSmax
+    
+    par(mar=c(2,2,4,1))
+    
+    ylist <- freqTable[nrange,4]
+    
+    plot(nrange,
+         ylist, 
+         main="Function Length")
+    
   })
   
   # Provide 
@@ -96,7 +113,8 @@ shinyServer(function(input, output) {
   # Create a table to display the information for searched function.
   output$tresult <- renderTable({
     tsearch <- input$tsearch
-    returner <- concordance[concordance[,1]==tsearch,]
+    returner <- freqTable[freqTable[,1]==tsearch,]
+    rownames(returner) <- NULL
     if (length(returner)==0) returner <- NULL
     returner
   })
