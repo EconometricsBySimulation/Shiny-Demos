@@ -18,22 +18,26 @@ shinyUI(pageWithSidebar(
     checkboxInput("logY", "Display log of wordcount", value = FALSE),
         
     textInput("tsearch", "Search for function", "list"),
+    tableOutput("tresult"),
           
+    h5("Thank you to John Myles White for compiling a list of word frequencies (in 2009) from source files for all CRAN Packages:"),
+    tags$a("John Myles White", 
+           href="http://www.johnmyleswhite.com/notebook/2009/12/07/r-function-usage-frequencies/"),
     h5("Created by:"),
     tags$a("Econometrics by Simulation", 
            href="http://www.econometricsbysimulation.com"),
-    h5("For details on how data is generated:"),
+    h5("For details on how applications was generated:"),
     tags$a("Blog Post", 
-           href="http://www.econometricsbysimulation.com/2013/11/alpha-testing-shinyappsio-first.html"),
+           href="http://www.econometricsbysimulation.com/2014/3/fcount.html"),
     h5("Github Repository:"),
     tags$a("Function Counter", 
-           href="https://github.com/EconometricsBySimulation/Shiny-Demos/tree/master/Bounce"),
+           href="https://github.com/EconometricsBySimulation/Shiny-Demos/blob/master/Function-Counter/"),
     h5(textOutput("counter"))
     ),
   
   # Show a table summarizing the values entered
   mainPanel(plotOutput("frequencydisplay"),
             textOutput("Rangewarning"),
-            tableOutput("tresult"),
-            textOutput("near"))
+            plotOutput("nchardisplay")
+            )
 ))
