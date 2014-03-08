@@ -1,5 +1,3 @@
-# setwd("C:/Dropbox/Econometrics by Simulation/2014-03-March/FCount")
-
 library(shiny)
 
 load("freqTable.Rdata")
@@ -88,7 +86,7 @@ shinyServer(function(input, output) {
     
     plot(nrange,
          ylist, 
-         main="Function Length")
+         main="Function Character Length")
     
   })
   
