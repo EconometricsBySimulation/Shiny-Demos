@@ -1,7 +1,6 @@
 library("shiny")
 library("ggplot2")
 library("scales")
-library("magrittr")
 library("rmongodb"); load("mongodb-login.RData")
 
 # Simulation and Shiny Application of Flue Season Dynamics
